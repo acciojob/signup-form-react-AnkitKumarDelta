@@ -12,51 +12,44 @@ const App = () => {
   const handleForm = (e) => {
     e.preventDefault();
 
-    // 1. Check empty fields (HIGHEST PRIORITY)
     if (!name || !email || !phone || !pass) {
       setMsg("All fields are mandatory");
       return;
     }
 
-    // 2. Name validation (alphanumeric + space)
     const nameRegex = /^[a-zA-Z0-9 ]+$/;
     if (!nameRegex.test(name)) {
       setMsg("Name is not alphanumeric");
       return;
     }
 
-    // 3. Email contains '@'
     if (!email.includes("@")) {
       setMsg("Email must contain @");
       return;
     }
 
-    // 4. Gender validation
     if (!["male", "female", "other"].includes(gender)) {
       setMsg("Please identify as male, female or others");
       return;
     }
 
-    // 5. Phone only numbers
     if (!/^[0-9]+$/.test(phone)) {
       setMsg("Phone Number must contain only numbers");
       return;
     }
 
-    // 6. Password length
     if (pass.length < 6) {
       setMsg("Password must contain atleast 6 letters");
       return;
     }
 
-    // SUCCESS
     const username = email.split("@")[0];
     setMsg(`Hello ${username}`);
   };
 
   return (
     <div id="main">
-      <span>{msg}</span>
+      <h2>{msg}</h2>
 
       <form onSubmit={handleForm}>
         <label htmlFor="name">
@@ -87,6 +80,7 @@ const App = () => {
             value={gender}
             onChange={(e) => setGender(e.target.value)}
           >
+            {/* UPDATED for Cypress → starts with capital letter */}
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
