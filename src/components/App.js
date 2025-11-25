@@ -31,10 +31,11 @@ const App = () => {
       return;
     }
 
-    if (!["Male", "Female", "Other"].includes(gender)) {
-      setError("Please identify as male, female or others");
-      return;
-    }
+    if (!["male", "female", "other"].includes(gender)) {
+        setError("Please identify as male, female or others");
+        return;
+       }
+
 
     if (!/^[0-9]+$/.test(phone)) {
       setError("Phone Number must contain only numbers");
@@ -80,16 +81,15 @@ const App = () => {
         <label htmlFor="gender">
           Gender:
           <select
-            data-testid="gender"
-            id="gender"
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-          >
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-
-          </select>
+           data-testid="gender"
+           id="gender"
+           value={gender}
+           onChange={(e) => setGender(e.target.value)}
+           >
+           <option value="male">Male</option>
+           <option value="female">Female</option>
+           <option value="other">Other</option>
+         </select>
         </label>
 
         <label htmlFor="phoneNumber">
