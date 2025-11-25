@@ -1,97 +1,126 @@
-import React, {Component, use, useState} from "react";
-import '../styles/App.css';
+import React, { useState } from "react";
+import "../styles/App.css";
 
 const App = () => {
-
-  const[name, setName] = useState("");
-  const[email, setEmail] = useState("");
-  const[phone, setPhone] = useState("");
-  const[pass, setPass] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [gender, setGender] = useState("male");
-  const[spantext, setSpantext] = useState("");
+  const [phone, setPhone] = useState("");
+  const [pass, setPass] = useState("");
+  const [msg, setMsg] = useState("");
 
-  const handleForm = (e)=>{
+  const handleForm = (e) => {
     e.preventDefault();
-    
-     if (!name || !email || !phone || !pass) {
-      setSpantext("All fields are mandatory.");
+
+    // 1. Check empty fields (HIGHEST PRIORITY)
+    if (!name || !email || !phone || !pass) {
+      setMsg("All fields are mandatory");
       return;
     }
 
+    // 2. Name validation (alphanumeric + space)
     const nameRegex = /^[a-zA-Z0-9 ]+$/;
-    if(!nameRegex.test(name)){
-      setSpantext(()=>'Name is not alphanumeric.');
+    if (!nameRegex.test(name)) {
+      setMsg("Name is not alphanumeric");
       return;
     }
 
-    if(!email.includes('@')){
-      setSpantext(()=>'Email must contain @.');
+    // 3. Email contains '@'
+    if (!email.includes("@")) {
+      setMsg("Email must contain @");
       return;
     }
 
+    // 4. Gender validation
     if (!["male", "female", "other"].includes(gender)) {
-      setSpantext("Please identify as male, female or others.");
+      setMsg("Please identify as male, female or others");
       return;
     }
 
+    // 5. Phone only numbers
     if (!/^[0-9]+$/.test(phone)) {
-      setSpantext("Phone Number must contain only numbers.");
+      setMsg("Phone Number must contain only numbers");
       return;
     }
 
-    if(pass.length < 6){
-      setSpantext(()=>' Password must contain atleast 6 letters');
+    // 6. Password length
+    if (pass.length < 6) {
+      setMsg("Password must contain atleast 6 letters");
       return;
     }
-    
+
+    // SUCCESS
     const username = email.split("@")[0];
-    setSpantext(`Hello ${username}`);
-  }
+    setMsg(`Hello ${username}`);
+  };
 
   return (
     <div id="main">
+      <span>{msg}</span>
 
-      <span>{spantext}</span>
-
-       <form onSubmit={(e)=>handleForm(e)}>
-
+      <form onSubmit={handleForm}>
         <label htmlFor="name">
-          Name: 
-          <input value={name} type="text" data-testid="name" id="name" onChange={(e)=>setName(e.target.value)} required/>
+          Name:
+          <input
+            data-testid="name"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </label>
 
         <label htmlFor="email">
-          Email: 
-          <input value={email} type="email" data-testid="email" id="email" onChange={(e)=>setEmail(e.target.value)} required/>
+          Email:
+          <input
+            data-testid="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </label>
 
         <label htmlFor="gender">
-          Gender: 
-          <select data-testid="gender" id="gender" value={gender} onChange={(e)=>setGender(e.target.value)}>
-            <option value="male">male</option>
-            <option value="female">female</option>
-            <option value="other">other</option>
+          Gender:
+          <select
+            data-testid="gender"
+            id="gender"
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+          >
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
           </select>
         </label>
 
         <label htmlFor="phoneNumber">
-          Phone Number: 
-          <input value={phone} type="text" data-testid="phoneNumber" id="phoneNumber" onChange={(e)=>setPhone(e.target.value)} required/>
+          Phone Number:
+          <input
+            data-testid="phoneNumber"
+            id="phoneNumber"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
         </label>
 
         <label htmlFor="password">
-          Password: 
-          <input value={pass} type="password" onChange={(e)=>setPass(e.target.value)} data-testid="password" id="password" required/>
+          Password:
+          <input
+            data-testid="password"
+            id="password"
+            type="password"
+            value={pass}
+            onChange={(e) => setPass(e.target.value)}
+          />
         </label>
 
         <label htmlFor="submit">
-          Submit button: 
-          <input type="submit" data-testid="submit" id="submit"/>
+          Submit button:
+          <input data-testid="submit" id="submit" type="submit" />
         </label>
-       </form>
+      </form>
     </div>
-  )
-}
-
+  );
+};
 
 export default App;
