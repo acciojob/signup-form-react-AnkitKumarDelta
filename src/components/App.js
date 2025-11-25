@@ -1,4 +1,4 @@
-import React, {Component, useState} from "react";
+import React, {Component, use, useState} from "react";
 import '../styles/App.css';
 
 const App = () => {
@@ -7,26 +7,35 @@ const App = () => {
   const[email, setEmail] = useState("");
   const[phone, setPhone] = useState("");
   const[pass, setPass] = useState("");
+  const[iserror, setIserror] = useState(false);
+  const[spantext, setSpantext] = useState("");
 
   const handleForm = (e)=>{
     e.preventDefault();
     const nameRegex = /^[a-zA-Z0-9]+$/;
     if(!nameRegex.test(name)){
-      alert('Name is not alphanumeric.');
+      setSpantext(()=>'Name is not alphanumeric.');
+      setIserror(()=>true);
       return;
     }
     if(!email.includes('@')){
-      alert('Email must contain @.');
+      setSpantext(()=>'Email must contain @.');
+      setIserror(()=>true);
       return;
     }
     if(pass.length < 6){
-      alert(' Password must contain atleast 6 letters');
+      setSpantext(()=>' Password must contain atleast 6 letters');
+      setIserror(()=>true);
       return;
     }
+    setIserror(false);
+    const username = email.split("@")[0];
+    setSpantext(`Hello ${username}`);
   }
 
   return (
     <div id="main">
+      <span>{spantext}</span>
        <form onSubmit={(e)=>handleForm(e)}>
         <label htmlFor="name">
           Name: 
