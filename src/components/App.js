@@ -81,15 +81,16 @@ const App = () => {
         <label htmlFor="gender">
           Gender:
           <select
-           data-testid="gender"
-           id="gender"
-           value={gender}
-           onChange={(e) => setGender(e.target.value)}
-           >
-           <option value="male">Male</option>
-           <option value="female">Female</option>
-           <option value="other">Other</option>
-         </select>
+  data-testid="gender"
+  id="gender"
+  value={gender}
+  onChange={(e) => setGender(e.target.value)}
+>
+  <option value="male">Male</option>
+  <option value="female">Female</option>
+  <option value="other">Other</option>
+</select>
+
         </label>
 
         <label htmlFor="phoneNumber">
