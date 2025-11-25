@@ -15,44 +15,37 @@ const App = () => {
 
     setGreet("");
 
-    // 1. Empty fields
     if (!name || !email || !phone || !pass) {
       setError("All fields are mandatory");
       return;
     }
 
-    // 2. Name validation
     const nameRegex = /^[a-zA-Z0-9 ]+$/;
     if (!nameRegex.test(name)) {
       setError("Name is not alphanumeric");
       return;
     }
 
-    // 3. Email validation
     if (!email.includes("@")) {
       setError("Email must contain @");
       return;
     }
 
-    // 4. Gender validation
-    if (!["male", "female", "other"].includes(gender)) {
+    if (!["Male", "Female", "Other"].includes(gender)) {
       setError("Please identify as male, female or others");
       return;
     }
 
-    // 5. Phone validation
     if (!/^[0-9]+$/.test(phone)) {
       setError("Phone Number must contain only numbers");
       return;
     }
 
-    // 6. Password validation
     if (pass.length < 6) {
       setError("Password must contain atleast 6 letters");
       return;
     }
 
-    // SUCCESS
     const username = email.split("@")[0].toUpperCase();
     setError("");
     setGreet(`Hello ${username}`);
@@ -92,9 +85,10 @@ const App = () => {
             value={gender}
             onChange={(e) => setGender(e.target.value)}
           >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+
           </select>
         </label>
 
