@@ -7,55 +7,60 @@ const App = () => {
   const [gender, setGender] = useState("male");
   const [phone, setPhone] = useState("");
   const [pass, setPass] = useState("");
-  const [error, setError] = useState("");   
-  const [greet, setGreet] = useState("");   
+  const [error, setError] = useState("");
+  const [greet, setGreet] = useState("");
 
   const handleForm = (e) => {
     e.preventDefault();
 
     setGreet("");
 
+    // 1. Empty fields
     if (!name || !email || !phone || !pass) {
       setError("All fields are mandatory");
       return;
     }
 
+    // 2. Name validation
     const nameRegex = /^[a-zA-Z0-9 ]+$/;
     if (!nameRegex.test(name)) {
       setError("Name is not alphanumeric");
       return;
     }
 
+    // 3. Email validation
     if (!email.includes("@")) {
       setError("Email must contain @");
       return;
     }
 
+    // 4. Gender validation
     if (!["male", "female", "other"].includes(gender)) {
       setError("Please identify as male, female or others");
       return;
     }
 
+    // 5. Phone validation
     if (!/^[0-9]+$/.test(phone)) {
       setError("Phone Number must contain only numbers");
       return;
     }
 
+    // 6. Password validation
     if (pass.length < 6) {
       setError("Password must contain atleast 6 letters");
       return;
     }
 
-    const username = email.split("@")[0];
-    setError(""); // clear errors
+    // SUCCESS
+    const username = email.split("@")[0].toUpperCase();
+    setError("");
     setGreet(`Hello ${username}`);
   };
 
   return (
     <div id="main">
-
       <span>{error}</span>
-
       <h2>{greet}</h2>
 
       <form onSubmit={handleForm}>
@@ -66,7 +71,6 @@ const App = () => {
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            required
           />
         </label>
 
@@ -77,7 +81,6 @@ const App = () => {
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
           />
         </label>
 
@@ -88,7 +91,6 @@ const App = () => {
             id="gender"
             value={gender}
             onChange={(e) => setGender(e.target.value)}
-            required
           >
             <option value="male">Male</option>
             <option value="female">Female</option>
@@ -103,7 +105,6 @@ const App = () => {
             id="phoneNumber"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            required
           />
         </label>
 
@@ -115,7 +116,6 @@ const App = () => {
             type="password"
             value={pass}
             onChange={(e) => setPass(e.target.value)}
-            required
           />
         </label>
 
