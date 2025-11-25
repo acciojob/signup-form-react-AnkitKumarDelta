@@ -7,49 +7,56 @@ const App = () => {
   const [gender, setGender] = useState("male");
   const [phone, setPhone] = useState("");
   const [pass, setPass] = useState("");
-  const [msg, setMsg] = useState("");
+  const [error, setError] = useState("");   
+  const [greet, setGreet] = useState("");   
 
   const handleForm = (e) => {
     e.preventDefault();
 
+    setGreet("");
+
     if (!name || !email || !phone || !pass) {
-      setMsg("All fields are mandatory");
+      setError("All fields are mandatory");
       return;
     }
 
     const nameRegex = /^[a-zA-Z0-9 ]+$/;
     if (!nameRegex.test(name)) {
-      setMsg("Name is not alphanumeric");
+      setError("Name is not alphanumeric");
       return;
     }
 
     if (!email.includes("@")) {
-      setMsg("Email must contain @");
+      setError("Email must contain @");
       return;
     }
 
     if (!["male", "female", "other"].includes(gender)) {
-      setMsg("Please identify as male, female or others");
+      setError("Please identify as male, female or others");
       return;
     }
 
     if (!/^[0-9]+$/.test(phone)) {
-      setMsg("Phone Number must contain only numbers");
+      setError("Phone Number must contain only numbers");
       return;
     }
 
     if (pass.length < 6) {
-      setMsg("Password must contain atleast 6 letters");
+      setError("Password must contain atleast 6 letters");
       return;
     }
 
     const username = email.split("@")[0];
-    setMsg(`Hello ${username}`);
+    setError(""); // clear errors
+    setGreet(`Hello ${username}`);
   };
 
   return (
     <div id="main">
-      <h2>{msg}</h2>
+
+      <span>{error}</span>
+
+      <h2>{greet}</h2>
 
       <form onSubmit={handleForm}>
         <label htmlFor="name">
@@ -59,6 +66,7 @@ const App = () => {
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
           />
         </label>
 
@@ -69,6 +77,7 @@ const App = () => {
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </label>
 
@@ -79,8 +88,8 @@ const App = () => {
             id="gender"
             value={gender}
             onChange={(e) => setGender(e.target.value)}
+            required
           >
-            {/* UPDATED for Cypress → starts with capital letter */}
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
@@ -94,6 +103,7 @@ const App = () => {
             id="phoneNumber"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            required
           />
         </label>
 
@@ -105,6 +115,7 @@ const App = () => {
             type="password"
             value={pass}
             onChange={(e) => setPass(e.target.value)}
+            required
           />
         </label>
 
