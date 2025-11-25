@@ -27,12 +27,12 @@ const App = () => {
     }
 
     if (!email.includes("@")) {
-      setError("Email must contain @");
+      setError('email must contain @');
       return;
     }
 
     if (!["male", "female", "other"].includes(gender)) {
-        setError("Please identify as male, female or others");
+        setError('Please identify as male, female or others');
         return;
        }
 
