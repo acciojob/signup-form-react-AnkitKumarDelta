@@ -10,3 +10,11 @@ button{
     justify-content: center;
     align-items: center;
 }
+form{
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+form input{
+    margin: 5px;
+}
